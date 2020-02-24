@@ -1,0 +1,58 @@
+@Component({
+  selector: 'app-reactive-favorite-color',
+  template: `
+    <div class="card">
+  <div class="card-header">
+    Registro de Compras
+  </div>
+  <div class="card-body">
+   
+    <div class="row">
+      <div class="col-lg">
+         
+               <div class="table">
+                  <table  class="table table-responsive "id="tablecompras" #tablecompras>
+                      <thead class="text-center table-bordered">
+                        <tr >
+                       
+                      </thead>
+                      <tbody class="table-borderless" *ngFor="let item of regCompras?.listRegistroCompraDet">
+                         
+                      </tbody>
+
+                    </table>
+               </div>
+               <hr>
+
+
+     
+
+
+      </div><!--FIN COL-->
+    </div><!--FIN ROW-->
+
+    <div> <button  (click)="ExportToExcel()">Export To excel</button></div>
+
+  </div>
+
+</div>
+
+  `
+})
+
+export class Excel {
+@ViewChild('tablecompras') tablecompras: ElementRef;
+
+
+  ExportToExcel()
+  {  
+    const ws: XLSX.WorkSheet=XLSX.utils.table_to_sheet(this.tablecompras.nativeElement,{dateNF:"dd/mm/yyyy",raw:true});
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'librocompra');
+
+    /* save to file */
+    XLSX.writeFile(wb, 'librocompra.xlsx');
+
+  }
+}
+
