@@ -1,3 +1,5 @@
+import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-reactive-favorite-color',
   template: `
